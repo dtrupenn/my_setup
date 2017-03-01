@@ -59,44 +59,11 @@ fi
 # NPM Installation
 sudo npm install forever express -g
 
+# Add Vundle
+git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
 # Install oh-my-zsh
 curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
-
-# Build neovim from source
-echo "Building neovim stable..."
-git clone https://github.com/neovim/neovim.git
-cd neovim
-rm -r build
-make clean
-make CMAKE_BUILD_TYPE=Release
-sudo make install
-cd ..
-
-# Build tmux from source
-
-echo "Building libevent stable..."
-wget https://github.com/libevent/libevent/releases/download/release-2.1.8-stable/libevent-2.1.8-stable.tar.gz
-tar -xzf libevent-2.1.8-stable.tar.gz
-cd libevent-2.1.8-stable
-./configure && make
-sudo make install
-cd ..
-
-echo "Building ncurses stable..."
-wget https://ftp.gnu.org/gnu/ncurses/ncurses-6.0.tar.gz
-tar -xzf ncurses-6.0.tar.gz
-cd ncurses-6.0
-./configure && make
-sudo make install
-cd ..
-
-echo "Building tmux stable..."
-git clone https://github.com/tmux/tmux.git
-cd tmux
-sh autogen.sh
-./configure && make
-sudo make install
-cd ..
 
 # Installing tmux mem cpu plugin
 if [ "$UNAME" == "darwin" ]; then
