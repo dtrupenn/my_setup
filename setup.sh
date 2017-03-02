@@ -59,11 +59,18 @@ fi
 # NPM Installation
 sudo npm install forever express -g
 
-# Add Vundle
-git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-
 # Install oh-my-zsh
 curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+
+# Build neovim from source
+git clone https://github.com/neovim/neovim.git
+cd neovim
+rm -r build
+make clean
+make CMAKE_BUILD_TYPE=Release
+sudo make install
+
+# Build tmux
 
 # Installing tmux mem cpu plugin
 if [ "$UNAME" == "darwin" ]; then
