@@ -63,6 +63,7 @@ sudo npm install forever express -g
 curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 
 # Build neovim from source
+echo "Building neovim stable..."
 git clone https://github.com/neovim/neovim.git
 cd neovim
 rm -r build
