@@ -69,8 +69,33 @@ rm -r build
 make clean
 make CMAKE_BUILD_TYPE=Release
 sudo make install
+cd ..
 
-# Build tmux
+# Build tmux from source
+
+echo "Building libevent stable..."
+wget https://github.com/libevent/libevent/releases/download/release-2.1.8-stable/libevent-2.1.8-stable.tar.gz
+tar -xzf libevent-2.1.8-stable.tar.gz
+cd libevent-2.1.8-stable
+./configure && make
+sudo make install
+cd ..
+
+echo "Building ncurses stable..."
+wget https://ftp.gnu.org/gnu/ncurses/ncurses-6.0.tar.gz
+tar -xzf ncurses-6.0.tar.gz
+cd ncurses-6.0
+./configure && make
+sudo make install
+cd ..
+
+echo "Building tmux stable..."
+git clone https://github.com/tmux/tmux.git
+cd tmux
+sh autogen.sh
+./configure && make
+sudo make install
+cd ..
 
 # Installing tmux mem cpu plugin
 if [ "$UNAME" == "darwin" ]; then
