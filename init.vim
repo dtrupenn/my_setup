@@ -84,6 +84,8 @@ Plug 'zchee/deoplete-jedi'
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
 
 " On-demand plugins
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
