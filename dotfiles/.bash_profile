@@ -110,20 +110,21 @@ alias rm='rm -i'
 alias diskspace='du -S | sort -n -r | more'
 alias pastie='python $HOME/bin/pastie/pastie.py'
 alias ctagit='ctags -R -f ./.git/tags .'
+alias kc='kubectl'
 if [ "$OS" = "linux" ]; then
     alias co='sh $HOME/bin/rmate'
-    alias gitInfo='ssh git@git.corp.appnexus.com info'
+    # AppNexus Specific
+    alias eos_rm='eos ps | grep $USER | awk '"'"'{ print $1 }'"'"' | while read inst ;  do eos kill -i $inst && eos rmc -i $inst; done'
+    alias refresh='eval `ssh-agent`; ssh-add'
+    alias htmldiff='pygmentize -l diff -O full=true -f html'
+    alias ssh_refresh='. $HOME/.ssh/latestagent'
+    alias frelease='autoenv list -f | grep test | awk '"'"'{ print $1 }'"'"' | xargs -L1 autoenv release'
     alias adnxs='cd /usr/local/adnxs'
     alias apps='cd /usr/local/adnxs/apps'
     alias configs='cd /usr/local/adnxs/configs'
     alias maestroui='cd /usr/local/adnxs/maestro3-ui'
     alias maestroapi='cd /usr/local/adnxs/maestro3-api'
     alias tasker='cd /usr/local/adnxs/tasker-api'
-    alias eos_rm='eos ps | grep $USER | awk '"'"'{ print $1 }'"'"' | while read inst ;  do eos kill -i $inst && eos rmc -i $inst; done'
-    alias refresh='eval `ssh-agent`; ssh-add'
-    alias htmldiff='pygmentize -l diff -O full=true -f html'
-    alias ssh_refresh='. $HOME/.ssh/latestagent'
-    alias frelease='autoenv list -f | grep test | awk '"'"'{ print $1 }'"'"' | xargs -L1 autoenv release'
 fi
 
 # Activate z command
