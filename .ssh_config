@@ -1,8 +1,44 @@
 Protocol 2,1
 ForwardAgent yes
-StrictHostKeyChecking no
 KeepAlive yes
+StrictHostKeyChecking no
 
-Host git
-  hostname git.corp.appnexus.com
-  user git
+Host *
+  UseKeychain yes
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/id_rsa
+
+# AppNexus Specific
+Host jump
+  hostname jump.adnxs.net
+  user dtrujillo
+
+Host jazzhands
+  hostname jazzhands-db.appnexus.net
+  user dtrujillo
+
+Host mysql-maestro
+  hostname mysql-maestro.mgmt.adnxs.net
+  user dtrujillo
+
+Host accttools
+  hostname 01.acct-tools.nym2.appnexus.net
+  user dtrujillo
+
+Host dev_centos
+  hostname 1103.dtrujillo.user.nym2.adnexus.net
+  user dtrujillo
+  RemoteForward 52698 localhost:52698
+  RemoteForward 8022 localhost:22
+
+Host dev
+  hostname 1830.dtrujillo.user.nym2.adnexus.net
+  user dtrujillo
+  RemoteForward 52698 localhost:52698
+  RemoteForward 8022 localhost:22
+
+Host dev_lax
+  hostname 485.dtrujillo.user.lax1.adnexus.net
+  user dtrujillo
+  RemoteForward 52698 localhost:52698
+  RemoteForward 8022 localhost:22
