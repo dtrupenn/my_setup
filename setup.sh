@@ -42,6 +42,15 @@ if [ "$UNAME" == "darwin" ]; then
     # Install node and other modules
     brew install node
     npm install forever express -g
+
+    # Install docker things
+    brew cask install docker
+    brew cask install virtualbox
+    brew cask install minikube
+
+    # Install Ankh
+    curl -L 'https://github.com/appnexus/ankh/releases/download/v1.0.0/ankh-darwin-amd64.tar.gz' | sudo tar -C /usr/local/bin -xzf -
+
 # Centos Linux
 elif [ -f $CENTOS_FILE ]; then
     sudo yum install cmake make gcc gcc-c++ nodejs redis
@@ -49,14 +58,22 @@ elif [ -f $CENTOS_FILE ]; then
 elif [ -f $UBUNTU_FILE ]; then
     sudo apt-get update; sudo apt-get -y install curl cmake make gcc python-setuptools python-dev python-pip build-essential tig python3-pip python-yaml npm nodejs redis-server python-psycopg2 apache2 php5 pkg-config wget git automake libtool
 
+    # AppNexus specific
     # sudo apt-get install appnexus-maestro-tools schema-tool
 
     sudo pip install --upgrade virtualenv; sudo pip install flake8; # sudo pip install neovim; sudo pip3 install neovim
+
+    curl -L 'https://github.com/appnexus/ankh/releases/download/v1.0.0/ankh-linux-amd64.tar.gz' | sudo tar -C /usr/local/bin -xzf -
 fi
 
 # TODO: Potentially re-enable
 # NPM Installation
 # sudo npm install forever express -g
+
+# Install Helm
+# More info: https://github.com/kubernetes/helm/blob/master/docs/install.md
+curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
+heml init --client-only
 
 # Install oh-my-zsh
 curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh

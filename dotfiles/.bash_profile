@@ -173,17 +173,16 @@ if [ -f $HOME/.bashrc ]; then
    source $HOME/.bashrc
 fi
 
-if [ $OS = "linux" ]; then
-    # Setting up PROMPT
-    source $HOME/bin/git-prompt.sh
+# Setting up PROMPT
+source $HOME/bin/git-prompt.sh
+source $HOME/bin/kube-ps1.sh
 
-    # Note these first four lines are optional
-    export GIT_PS1_SHOWCOLORHINTS=true
-    export GIT_PS1_SHOWDIRTYSTATE=true
-    export GIT_PS1_SHOWUNTRACKEDFILES=true
-    export GIT_PS1_SHOWUPSTREAM="verbose"
-    export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]$(__git_ps1 "\[\033[01;33m\](%s)\[\033[00m\]")[\D{%F %T}]\n$ '
-fi
+# Note these first four lines are optional
+export GIT_PS1_SHOWCOLORHINTS=true
+export GIT_PS1_SHOWDIRTYSTATE=true
+export GIT_PS1_SHOWUNTRACKEDFILES=true
+export GIT_PS1_SHOWUPSTREAM="verbose"
+export PS1='\[\033[01;32m\][\t]\[\033[00m\] \[\033[01;34m\]\W $(kube_ps1)\[\033[00m\]$(__git_ps1 "\[\033[01;33m\](%s)\[\033[00m\]")$ '
 
 # Startup actions
 if [ $OS = "linux" ]; then
