@@ -12,8 +12,8 @@ mkdir -p $HOME/.config/nvim
 cp flake8 $HOME/.config/flake8
 cp init.vim $HOME/.config/nvim/init.vim
 
-# TODO Re-evaluating
-#cp -r .vim $HOME/
+# Re-evaluating
+cp .tmux.conf $HOME/
 
 
 # Setting up bash profile
@@ -56,7 +56,7 @@ elif [ -f $CENTOS_FILE ]; then
     sudo yum install cmake make gcc gcc-c++ nodejs redis
 # Ubuntu Linux
 elif [ -f $UBUNTU_FILE ]; then
-    sudo apt-get update; sudo apt-get -y install curl cmake make gcc python-setuptools python-dev python-pip build-essential tig python3-pip python-yaml npm nodejs redis-server python-psycopg2 apache2 php5 pkg-config wget git automake libtool
+    sudo apt-get update; sudo apt-get -y install curl cmake make gcc python-setuptools python-dev python-pip build-essential tig python3-pip python-yaml npm nodejs redis-server python-psycopg2 apache2 pkg-config wget git automake libtool
 
     # AppNexus specific
     # sudo apt-get install appnexus-maestro-tools schema-tool
@@ -120,4 +120,7 @@ if [ "$UNAME" == "darwin" ]; then
     make
     sudo make install
 fi
+
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 echo "Run :PluginInstall in vim to complete Vundle Installation"
