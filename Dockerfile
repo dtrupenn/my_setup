@@ -1,5 +1,5 @@
 ARG OS_NAME=ubuntu
-ARG OS_VERSION=trusty
+ARG OS_VERSION=xenial
 
 FROM ${OS_NAME}:${OS_VERSION}
 
@@ -13,4 +13,8 @@ ADD flake8 $DIRPATH
 ADD setup.sh $DIRPATH
 
 WORKDIR $DIRPATH
+# https://github.com/phusion/baseimage-docker/issues/319
+RUN apt-get update && apt-get install -y --no-install-recommends \
+                      sudo apt-utils \
+		      && rm -rf /var/lib/apt/lists/*
 RUN ["/bin/bash", "setup.sh"]

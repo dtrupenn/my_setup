@@ -12,10 +12,6 @@ mkdir -p $HOME/.config/nvim
 cp flake8 $HOME/.config/flake8
 cp init.vim $HOME/.config/nvim/init.vim
 
-# Re-evaluating
-cp .tmux.conf $HOME/
-
-
 # Setting up bash profile
 sudo cp $HOME/bin/git-prompt.sh /etc/bash_completion.d/git
 # source $HOME/.bash_profile
@@ -33,7 +29,7 @@ if [ "$UNAME" == "darwin" ]; then
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
     # Install Command Line Tools
-    # NOTE: Assume alreaady installed
+    # NOTE: Assume already installed
     #xcode-select --install
 
     # Install pkgs
@@ -56,12 +52,12 @@ elif [ -f $CENTOS_FILE ]; then
     sudo yum install cmake make gcc gcc-c++ nodejs redis
 # Ubuntu Linux
 elif [ -f $UBUNTU_FILE ]; then
-    sudo apt-get update; sudo apt-get -y install curl cmake make gcc python-setuptools python-dev python-pip build-essential tig python3-pip python-yaml npm nodejs redis-server python-psycopg2 apache2 pkg-config wget git automake libtool
+    sudo apt-get update; sudo apt-get -y install curl openssh-server cmake make gcc python-setuptools python-dev python-pip build-essential tig python3-pip python-yaml npm nodejs redis-server python-psycopg2 apache2 pkg-config wget git automake libtool
 
     # AppNexus specific
     # sudo apt-get install appnexus-maestro-tools schema-tool
 
-    sudo pip install --upgrade virtualenv; sudo pip install flake8; # sudo pip install neovim; sudo pip3 install neovim
+    sudo pip install --upgrade pip; sudo pip install --upgrade virtualenv; sudo pip install flake8; # sudo pip install neovim; sudo pip3 install neovim
 
     curl -L 'https://github.com/appnexus/ankh/releases/download/v1.0.0/ankh-linux-amd64.tar.gz' | sudo tar -C /usr/local/bin -xzf -
 fi
@@ -73,7 +69,7 @@ fi
 # Install Helm
 # More info: https://github.com/kubernetes/helm/blob/master/docs/install.md
 curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
-heml init --client-only
+helm init --client-only
 
 # Install oh-my-zsh
 curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
@@ -101,6 +97,8 @@ echo "Building ncurses stable..."
 wget https://ftp.gnu.org/gnu/ncurses/ncurses-6.0.tar.gz
 tar -xzf ncurses-6.0.tar.gz
 cd ncurses-6.0
+# https://trac.sagemath.org/ticket/19762
+export CPPFLAGS="-P"
 ./configure && make
 sudo make install
 cd ..
