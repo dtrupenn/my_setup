@@ -31,8 +31,6 @@ syntax on
 " Use 256 colors!
 set t_Co=256
 
-colorscheme molokai
-
 """
 " Search
 """

@@ -18,22 +18,20 @@ sudo cp $HOME/bin/git-prompt.sh /etc/bash_completion.d/git
 
 # Determine OS platform
 UNAME=$(uname | tr "[:upper:]" "[:lower:]")
-CENTOS_FILE="/etc/redhat-release"
 UBUNTU_FILE="/etc/os-release"
 
 # Packages
 # Mac
 if [ "$UNAME" == "darwin" ]; then
-    # Install Homebrew
-    # http://brew.sh/
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    ANKH_ARTIFACT='ankh-darwin-amd64.tar.gz'
 
     # Install Command Line Tools
     # NOTE: Assume already installed
-    #xcode-select --install
+    # xcode-select --install
 
-    # Install pkgs
-    brew install neovim tmux
+    # Install Homebrew
+    # http://brew.sh/
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
     # Install node and other modules
     brew install node
@@ -44,72 +42,43 @@ if [ "$UNAME" == "darwin" ]; then
     brew cask install virtualbox
     brew cask install minikube
 
-    # Install Ankh
-    curl -L 'https://github.com/appnexus/ankh/releases/download/v1.0.0/ankh-darwin-amd64.tar.gz' | sudo tar -C /usr/local/bin -xzf -
+    # Install tools
+    brew install neovim tmux tig tree wget
 
-# Centos Linux
-elif [ -f $CENTOS_FILE ]; then
-    sudo yum install cmake make gcc gcc-c++ nodejs redis
+    # Install python things
+    brew install python
+    pip3 install neovim
+
 # Ubuntu Linux
 elif [ -f $UBUNTU_FILE ]; then
-    sudo apt-get update; sudo apt-get -y install curl openssh-server cmake make gcc python-setuptools python-dev python-pip build-essential tig python3-pip python-yaml npm nodejs redis-server python-psycopg2 apache2 pkg-config wget git automake libtool
+    ANKH_ARTIFACT='ankh-linux-amd64.tar.gz'
+    sudo apt-get update; sudo apt-get -y install curl openssh-server cmake make gcc python-setuptools python-dev python-pip build-essential tig python3-pip python-yaml npm nodejs redis-server python-psycopg2 apache2 pkg-config wget git automake libtool tig
 
     # AppNexus specific
     # sudo apt-get install appnexus-maestro-tools schema-tool
 
-    sudo pip install --upgrade pip; sudo pip install --upgrade virtualenv; sudo pip install flake8; # sudo pip install neovim; sudo pip3 install neovim
+    sudo pip install --upgrade pip; sudo pip install --upgrade virtualenv; sudo pip install flake8; sudo pip install neovim; sudo pip3 install neovim
 
     curl -L 'https://github.com/appnexus/ankh/releases/download/v1.0.0/ankh-linux-amd64.tar.gz' | sudo tar -C /usr/local/bin -xzf -
-fi
 
-# TODO: Potentially re-enable
-# NPM Installation
-# sudo npm install forever express -g
+    # NPM Installation
+    sudo npm install forever express -g
+
+fi
 
 # Install Helm
 # More info: https://github.com/kubernetes/helm/blob/master/docs/install.md
-curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
+curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get-helm-3 | bash -e
 helm init --client-only
+
+# Install Ankh
+curl -L "https://github.com/appnexus/ankh/releases/download/v2.1.0/$ANKH_ARTIFACT" | sudo tar -C /usr/local/bin -xzf -
 
 # Install oh-my-zsh
 curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 
-# Build neovim from source
-echo "Building neovim stable..."
-git clone https://github.com/neovim/neovim.git
-cd neovim
-rm -r build
-make clean
-make CMAKE_BUILD_TYPE=Release
-sudo make install
-cd ..
-
-# Build tmux from source
-echo "Building libevent stable..."
-wget https://github.com/libevent/libevent/releases/download/release-2.1.8-stable/libevent-2.1.8-stable.tar.gz
-tar -xzf libevent-2.1.8-stable.tar.gz
-cd libevent-2.1.8-stable
-./configure && make
-sudo make install
-cd ..
-
-echo "Building ncurses stable..."
-wget https://ftp.gnu.org/gnu/ncurses/ncurses-6.0.tar.gz
-tar -xzf ncurses-6.0.tar.gz
-cd ncurses-6.0
-# https://trac.sagemath.org/ticket/19762
-export CPPFLAGS="-P"
-./configure && make
-sudo make install
-cd ..
-
-echo "Building tmux stable..."
-git clone https://github.com/tmux/tmux.git
-cd tmux
-sh autogen.sh
-./configure && make
-sudo make install
-cd ..
+# Install powerlevel10k
+brew install romkatv/powerlevel10k/powerlevel10k
 
 # Installing tmux mem cpu plugin
 if [ "$UNAME" == "darwin" ]; then
@@ -121,4 +90,5 @@ fi
 
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-echo "Run :PluginInstall in vim to complete Vundle Installation"
+echo "Run :PluginInstall in neovim to complete Vundle Installation"
+echo "Check https://github.com/mbadolato/iTerm2-Color-Schemes for iTerm2 color schemes"
