@@ -1,6 +1,6 @@
 [user]
-	email = dtrujillo@appnexus.com
-	name = Dan Trujillo
+    email = dtrujillo@appnexus.com
+    name = Dan Trujillo
 [alias]
     st = status -s
     co = checkout
@@ -20,4 +20,4 @@
     fnuke = !sh -c 'git branch -D $1 && git push origin :$1' -
     pr = pull --rebase
 [core]
-	editor = vim
+    editor = vim
