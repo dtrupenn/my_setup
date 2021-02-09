@@ -43,7 +43,7 @@ if [ "$UNAME" == "darwin" ]; then
     brew cask install minikube
 
     # Install tools
-    brew install neovim tmux tig tree wget
+    brew install neovim tmux tig tree wget fzf
 
     # Install python things
     brew install python

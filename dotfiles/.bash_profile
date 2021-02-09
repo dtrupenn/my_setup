@@ -110,7 +110,13 @@ alias rm='rm -i'
 alias diskspace='du -S | sort -n -r | more'
 alias pastie='python $HOME/bin/pastie/pastie.py'
 alias ctagit='ctags -R -f ./.git/tags .'
-alias kc='kubectl'
+alias apps='cd ~/Documents/workspace/apps'
+alias configs='cd ~/Documents/workspace/configs'
+alias frelease='autoenv list -f | grep test | awk '"'"'{ print $1 }'"'"' | xargs -L1 autoenv release'
+alias htmldiff='pygmentize -l diff -O full=true -f html'
+alias kc='kubectl-v1.15.11'
+alias kc13='kubectl-v1.13.5'
+alias kc15='kubectl-v1.15.11'
 if [ "$OS" = "linux" ]; then
     alias co='sh $HOME/bin/rmate'
     # AppNexus Specific
@@ -131,7 +137,7 @@ fi
 . $HOME/bin/z/z.sh
 
 # Exposing editor for things
-export EDITOR='vim'
+export EDITOR='nvim'
 if [ $OS = "linux" ]; then
     alias vim="nvim"
     alias vi="nvim"
@@ -142,6 +148,7 @@ fi
 export PATH="$HOME:$PATH"
 export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/git_alias:$PATH"
+export PATH="$HOME/go/bin:$PATH"
 if [ "$OS" = "mac" ]; then
     export PATH="$HOME/Python-2.7.3:$PATH"
     export PATH="/usr/local/opt/ruby/bin:$PATH"
@@ -167,7 +174,7 @@ HISTSIZE=10000
 export LANGUAGE=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-#export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
+export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
 
 # Load bashrc if it exists
 if [ -f $HOME/.bashrc ]; then
@@ -194,3 +201,24 @@ if [ $OS = "linux" ]; then
     #    exec tmux attach
     #fi
 fi
+
+# FZF Settings
+# Use ~~ as the trigger sequence instead of the default **
+export FZF_COMPLETION_TRIGGER='~~'
+
+# Options to fzf command
+export FZF_COMPLETION_OPTS='+c -x'
+
+# Use fd (https://github.com/sharkdp/fd) instead of the default find
+# command for listing path candidates.
+# - The first argument to the function ($1) is the base path to start traversal
+# - See the source code (completion.{bash,zsh}) for the details.
+_fzf_compgen_path() {
+  fd --hidden --follow --exclude ".git" . "$1"
+}
+
+# Use fd to generate the list for directory completion
+_fzf_compgen_dir() {
+  fd --type d --hidden --follow --exclude ".git" . "$1"
+}
+
